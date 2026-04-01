@@ -1,0 +1,15 @@
+name: ClawCloud 自动保活(防30天封号)
+on:
+  schedule:
+    - cron: '0 0 */25 * *'  # 每25天运行一次
+  workflow_dispatch:        # 允许手动点一下测试
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 自动登录瓜爪云保活
+        run: |
+          curl -L -X POST "https://accounts.claw.cloud/api/login" \
+          -H "Content-Type: application/x-www-form-urlencoded" \
+          -d "username=${{ secrets.CLAW_USER }}&password=${{ secrets.CLAW_PASS }}"
